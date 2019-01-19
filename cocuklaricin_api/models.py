@@ -6,7 +6,8 @@ class Machine(models.Model):
     map_url = models.URLField(blank=False, null=False)
     fund_raise_date = models.DateField(blank=False, null=False)
     campaign = models.ForeignKey('Campaign', on_delete=models.CASCADE)
-    fund = models.ForeignKey('fund', on_delete=models.CASCADE)
+    active = models.BooleanField(default=False)
+    fund = models.ForeignKey('fund', on_delete=models.SET_NULL,blank=True, null=True)
 
 class Fund(models.Model):
     amount = models.FloatField(blank=False)
@@ -17,6 +18,8 @@ class Fund(models.Model):
 class Campaign(models.Model):
     start_date = models.DateTimeField(blank=False, null=False)
     end_date = models.DateTimeField(blank=True, null=True)
+    active = models.BooleanField(default=False)
+    description = models.TextField(max_length=3000)
     notes = models.TextField(blank=True)
 
 class CompanyExecutive(models.Model):
